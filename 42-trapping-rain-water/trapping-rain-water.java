@@ -6,7 +6,7 @@ class Solution {
         int max = -1;
         int water = 0;
         while(i < j){
-            if (height[i] < height[j]){
+            if (height[i] <= height[j]){
                 if(max < height[i]){
                     max = height[i];
                 }
