@@ -15,26 +15,20 @@
  */
 class Solution {
     private int max;
-    private int height(TreeNode root){
+
+    private int helper(TreeNode root){
         if(root == null){
             return 0;
         }
-        return 1+(Math.max(height(root.left), height(root.right)));
-
-
-    }
-    private int helper(TreeNode root){
-        if(root == null){
-            return max;
-        }
-        int curr = height(root.left) + height(root.right);
-        max = Math.max(max,curr);
-        helper(root.left);
-        helper(root.right);
-        return max;
+        int left = helper(root.left);
+        int right = helper(root.right);
+        max = Math.max(max, left+right);
+        return 1+Math.max(left, right);
     }
     public int diameterOfBinaryTree(TreeNode root) {
-        return helper(root);
+        max = 0;
+        helper(root);
+        return max;
     }
 
 }
