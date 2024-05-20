@@ -1,32 +1,27 @@
-import java.util.AbstractMap;
 class Solution {
-    public class Pair{
+    class Pair{
         int temp;
         int index;
-        public Pair(int temp, int index){
+        Pair(int temp, int index){
             this.temp = temp;
             this.index = index;
         }
+
     }
     public int[] dailyTemperatures(int[] temperatures) {
         Stack<Pair> stack = new Stack<>();
+        int i = 0;
         int[] result = new int[temperatures.length];
-        int i = temperatures.length-1;
-        while(i >= 0){
-            while(stack.isEmpty() == false && temperatures[i] >= stack.peek().temp){
-                stack.pop();
-            }
-            if (stack.isEmpty()){
-                result[i] = 0;
-            }
-            else{
-                int temp = stack.peek().index;
-                result[i] = temp - i;
+        Arrays.fill(result, 0);
+        while(i < temperatures.length){
+            while(stack.isEmpty() == false && temperatures[i] > stack.peek().temp){
+                int index = stack.pop().index;
+                result[index] = i-index;
             }
             stack.push(new Pair(temperatures[i], i));
-            i--;
-        }
+            i++;
 
+        }
         return result;
         
         
