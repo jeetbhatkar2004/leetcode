@@ -1,31 +1,21 @@
 class Solution {
-    public void helper(int[] nums, int target,int start, List<List<Integer>> result, List<Integer> curr ){
-        if(target == 0){
-            result.add(new ArrayList<>(curr)); 
+    public void helper(int[] nums, int target, List<List<Integer>> result, int i,List<Integer> curr, int total ) {
+        if(total == target){
+            result.add(new ArrayList<Integer>(curr));
             return;
         }
-        for(int i = start; i < nums.length; i++){
-            if(nums[i] <= target){
-                curr.add(nums[i]);
-                helper(nums, target - nums[i], i, result, curr);
-                curr.remove(curr.size() -1);
-            }
-
+        if(total > target || i >= nums.length){
+            return;
         }
-    }
-    public int sum(List<Integer> curr){
-        int i = 0;
-        int sum = 0;
-        while(i < curr.size()){
-            sum = sum + curr.get(i);
-            i++;
-        }
-        return sum;
+        curr.add(nums[i]);
+        helper(nums, target, result, i, curr, total + nums[i]);
+        curr.remove(curr.size() -1);
+        helper(nums, target, result, i+1, curr, total);
     }
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> curr = new ArrayList<>();
-        helper(candidates, target, 0, result, curr);
+        helper(candidates, target, result, 0,curr, 0);
         return result;
         
     }
