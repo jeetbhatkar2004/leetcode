@@ -18,9 +18,8 @@ class Solution {
             return Integer.compare(a[1], b[1]);
         });
         int count = 0;
-        i = 1;
-        int time = newtasks[0][0];
-        pq.add(newtasks[0]);
+        i = 0;
+        int time = 0;
         while(count < tasks.length){
             while(i < tasks.length && time >= newtasks[i][0]){
                 pq.offer(newtasks[i]);
