@@ -1,81 +1,72 @@
-import java.util.HashMap;
-import java.util.Map;
-
 class LRUCache {
-    private class Node {
-        int key, val;
-        Node next, prev;
-        Node(int key, int val) {
+    Map<Integer, Node> cache;
+    int size = 0;
+    int capacity;
+    Node head;
+    Node tail;
+    class Node{
+        int val;
+        int key;
+        Node next;
+        Node prev;
+
+        public Node(int key, int val){
             this.key = key;
             this.val = val;
         }
     }
-
-    private int capacity, size;
-    private Map<Integer, Node> cache;
-    private Node head, tail;
-
     public LRUCache(int capacity) {
         this.capacity = capacity;
-        this.size = 0;
-        this.cache = new HashMap<>();
-        this.head = new Node(0, 0);  
-        this.tail = new Node(0, 0);  
+        cache = new HashMap<>();
+        size = 0;
+        head = new Node(-1,-1);
+        tail = new Node(-1,-1);
         head.next = tail;
         tail.prev = head;
     }
-
-    private void addToHead(Node node) {
+    public void addToHead(Node node){
         node.next = head.next;
-        head.next.prev = node;
-        head.next = node;   
         node.prev = head;
-
-
+        head.next.prev = node;
+        head.next = node;
     }
-
-    private void removeNode(Node node) {
-        Node prev = node.prev;
-        Node next = node.next;
-        prev.next = next;
-        next.prev = prev;
+    public void removeNode(Node node){
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
     }
-
-    private void moveToHead(Node node) {
-        removeNode(node);
-        addToHead(node);
-    }
-
-    private void removeLRU() {
+    public Node removeLRU(){
         Node lru = tail.prev;
         removeNode(lru);
         cache.remove(lru.key);
+        return lru;
     }
-
     public int get(int key) {
-        if (!cache.containsKey(key)) {
-            return -1;
+        if(cache.containsKey(key)){
+            removeNode(cache.get(key));
+            addToHead(cache.get(key));
+            return cache.get(key).val;
         }
-        Node node = cache.get(key);
-        moveToHead(node);
-        return node.val;
+        return -1;     
     }
-
+    
     public void put(int key, int value) {
-        if (cache.containsKey(key)) {
-            Node node = cache.get(key);
-            node.val = value;
-            moveToHead(node);
-        } else {
-            Node newNode = new Node(key, value);
-            cache.put(key, newNode);
-            addToHead(newNode);
+        if(cache.containsKey(key)){
+            Node temp = cache.get(key);
+            removeNode(temp);
+            addToHead(temp);
+            temp.val = value;
+        }
+        else{
+            Node temp = new Node(key, value);
+            addToHead(temp);
+            cache.put(key,temp);
             size++;
-            if (size > capacity) {
+            if(size > capacity){
                 removeLRU();
                 size--;
             }
         }
+        
     }
 }
 
@@ -83,5 +74,5 @@ class LRUCache {
  * Your LRUCache object will be instantiated and called as such:
  * LRUCache obj = new LRUCache(capacity);
  * int param_1 = obj.get(key);
- * obj.put(key, value);
+ * obj.put(key,value);
  */
