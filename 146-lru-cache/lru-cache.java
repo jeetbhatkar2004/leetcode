@@ -26,10 +26,12 @@ class LRUCache {
     }
 
     private void addToHead(Node node) {
-        node.prev = head;
         node.next = head.next;
         head.next.prev = node;
-        head.next = node;
+        head.next = node;   
+        node.prev = head;
+
+
     }
 
     private void removeNode(Node node) {
