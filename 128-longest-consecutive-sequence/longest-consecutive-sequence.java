@@ -16,9 +16,8 @@ class Solution {
                 while(hash.contains(temp)){
                     temp++;
                     count++;
-                    result = Math.max(result, count);
-
                 }
+                result = Math.max(result, count);
             }
             i++;
         }
