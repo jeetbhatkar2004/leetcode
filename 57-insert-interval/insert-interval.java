@@ -18,6 +18,7 @@ class Solution {
         int[] curr = result.get(0);
         while(i < result.size()){
             if(curr[1] >= result.get(i)[0]){
+                curr[0] = Math.min(curr[0], result.get(i)[0]);
                 curr[1] = Math.max(curr[1], result.get(i)[1]);
             }else{
                 curr = result.get(i);
