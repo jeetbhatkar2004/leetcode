@@ -22,7 +22,7 @@ class Solution {
             return;
         }
         //3'S TEMP = 5
-        //Long temp = curr;
+        Long temp = curr;
         curr = curr + root.val;
         //3'S CURR = 8
         if(curr == target){
@@ -31,7 +31,7 @@ class Solution {
         helper(root.left, target, curr); //WE ARE HERE FROM 5 BACK FROM 3 -> 
         helper(root.right, target, curr);
         //3's CURR = 5
-        //curr = temp;
+        curr = temp;
 
     }
     void dfs(TreeNode root){
