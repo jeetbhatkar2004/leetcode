@@ -14,19 +14,25 @@
  * }
  */
 class Solution {
-    public boolean helper(TreeNode left, TreeNode right){
-        if(left == null && right == null){
-            return true;
+    boolean val = true;
+    public void helper(TreeNode a, TreeNode b){
+        if(a == null && b == null){
+            return;
         }
-        if(left == null || right == null){
-            return false;
+        if(a == null || b == null){
+            val = false;
+            return;
         }
-        if(left.val != right.val){
-            return false;
+        if(a.val != b.val){
+            val = false;
+            return;
         }
-        return helper(left.left, right.right) && helper(left.right, right.left);
+        helper(a.left, b.right);
+        helper(a.right, b.left);
+
     }
     public boolean isSymmetric(TreeNode root) {
-        return helper(root.left, root.right);
-    }
+        helper(root.left, root.right);
+        return val;
+    }   
 }
