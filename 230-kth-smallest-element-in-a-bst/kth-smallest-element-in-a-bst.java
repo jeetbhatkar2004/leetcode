@@ -27,7 +27,7 @@ class Solution {
         if(count == k){
             val = root.val;
         }
-        helper(root.right, k);
+        helper(root.right,k);
     }
     public int kthSmallest(TreeNode root, int k) {
         helper(root, k);
