@@ -6,7 +6,7 @@ class Solution {
         Long curr = 0l;
         while(start <= end){
             mid = start + (end - start)/2;
-            curr = (long) mid * mid;
+            curr = (long)mid * mid;
             if(curr == x){
                 return mid;
             }
