@@ -25,11 +25,10 @@ public class Solution {
     public void helper(TreeNode root) {
         if(root == null){
             return;
-        }
+        }        
         helper(root.left);
-        if(prev != null && prev.val >= root.val){
+        if(prev != null && root.val <= prev.val){
             valid = false;
-            return;
         }
         prev = root;
         helper(root.right);
