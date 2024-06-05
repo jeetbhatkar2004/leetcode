@@ -5,13 +5,15 @@ class Solution {
 
         List<int[]> result = new ArrayList<>();
         int[] curr = intervals[0];
-        for (int i = 1; i < intervals.length; i++) {
+        int i = 1;
+        while(i < intervals.length) {
             if (curr[1] >= intervals[i][0]) {
                 curr[1] = Math.max(curr[1], intervals[i][1]);
             } else {
                 result.add(curr);
                 curr = intervals[i];
             }
+            i++;
         }
         result.add(curr);
         return result.toArray(new int[result.size()][]);
