@@ -19,10 +19,9 @@ class Solution {
         if(curr == null){
             return;
         }
-        val = val * 10 + curr.val;
-        if(curr.right == null && curr.left == null){
-            result = result + val;
-            return;
+        val = 10*val + curr.val;
+        if(curr.left == null && curr.right == null){
+            result += val;
         }
         helper(curr.left, val);
         helper(curr.right, val);
