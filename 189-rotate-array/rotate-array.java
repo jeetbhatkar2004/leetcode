@@ -1,23 +1,17 @@
 class Solution {
-    public void helper(int[] nums, int start, int end){
-        while(start <= end){
-            int temp = nums[start];
-            nums[start] = nums[end];
-            nums[end] = temp;
-            start++;
-            end--;
-        }
-
-    }
-    public void rotate(int[] nums, int k) {
-        if(nums == null || k <= 0 || nums.length== 0){
+    private void helper(int[] nums, int start, int end){
+        if(start >= end){
             return;
         }
-        k= k%nums.length;
-        helper(nums, 0, nums.length -1);
-        helper(nums, 0, k-1);
-        helper(nums, k, nums.length -1);
-
-        
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+        helper(nums, start+1, end-1);
     }
-}
+    public void rotate(int[] nums, int k) { 
+        k = k % nums.length;
+        System.out.println(k);
+        helper(nums, 0, nums.length - 1);
+        helper(nums, 0, k-1);
+        helper(nums, k, nums.length - 1);
+}}
