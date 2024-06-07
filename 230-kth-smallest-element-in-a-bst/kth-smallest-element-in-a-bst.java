@@ -16,22 +16,22 @@
 import java.util.Stack;
 
 class Solution {
-    int val;
-    int count = 0;
+    int res = 0;
+    int temp = 0;
     void helper(TreeNode root, int k){
         if(root == null){
             return;
         }
         helper(root.left, k);
-        count++;
-        if(count == k){
-            val = root.val;
+        temp++;
+        if(temp == k){
+            res = root.val;
         }
-        helper(root.right,k);
+        helper(root.right, k);
     }
     public int kthSmallest(TreeNode root, int k) {
         helper(root, k);
-        return val;
+        return res;
 
     }
 }
