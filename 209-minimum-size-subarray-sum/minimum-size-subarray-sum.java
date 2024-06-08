@@ -4,27 +4,23 @@ class Solution {
         int j = 0;
         int curr = 0;
         int min = Integer.MAX_VALUE;
-        while (j < nums.length){
+        while(j < nums.length){
             curr = curr + nums[j];
-            if(curr < target){
-                j++;
-                continue;
-            }
-            else{
-                while(i <= j && curr >= target){
-                    min = Math.min(min, j-i+1);
+            if(curr >= target){
+                int temp = j-i+1;
+                min = Math.min(min, temp);
+                while(curr >= target && i <= j){
+                    temp = j-i+1;
+                    min = Math.min(min, temp);
                     curr = curr - nums[i];
                     i++;
                 }
-                j++;
-
             }
+            j++;
         }
-        if (min == Integer.MAX_VALUE){
+        if(min == Integer.MAX_VALUE){
             return 0;
         }
-        else{
-            return min;
-        }
+        return min;
     }
 }
