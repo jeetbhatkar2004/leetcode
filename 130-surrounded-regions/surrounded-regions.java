@@ -1,50 +1,52 @@
 class Solution {
-    void dfs(char[][] board, int i , int j){
-        if (i < 0 || j < 0 || i >= board.length || j >= board[0].length || board[i][j] != 'O'){
+    void helper(char[][] grid, int i , int j){
+        if(i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] != 'O'){
             return;
         }
-        board[i][j] = '2';
-        dfs(board, i + 1, j);
-        dfs(board, i - 1, j);
-        dfs(board, i, j + 1);
-        dfs(board, i, j - 1);
+        grid[i][j] = '2';
+        helper(grid, i + 1, j);
+        helper(grid, i - 1, j);
+        helper(grid, i, j+1);
+        helper(grid, i, j-1);
 
     }
-    public void solve(char[][] board) {
+    public void solve(char[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length; 
         int i = 0;
-        while(i < board.length ){
-            if(board[i][0] == 'O'){
-                dfs(board, i, 0);
+        int j = 0;
+        while(i < m){
+            if(grid[i][n-1] == 'O'){
+                helper(grid, i, n-1);
             }
-            if(board[i][board[0].length - 1] == 'O'){
-                dfs(board, i , board[0].length - 1);
+            if(grid[i][0] == 'O'){
+                helper(grid, i, 0);
             }
             i++;
         }
-        int j = 0;
-        while(j < board[0].length ){
-            if(board[0][j] == 'O'){
-                dfs(board, 0, j);
+        while(j < n){
+            if(grid[m-1][j] == 'O'){
+                helper(grid, m-1, j);
             }
-            if(board[board.length - 1][j] == 'O'){
-                dfs(board, board.length - 1 , j);
+            if(grid[0][j] == 'O'){
+                helper(grid, 0, j);
             }
             j++;
         }
         i = 0;
         j = 0;
-        while(i < board.length){
+        while(i < m){
             j = 0;
-            while(j < board[0].length){
-                if(board[i][j] != '2'){
-                    board[i][j] = 'X';
+            while(j < n){
+                if(grid[i][j] != '2'){
+                    grid[i][j] = 'X';
                 }
                 else{
-                    board[i][j] = 'O';
+                    grid[i][j] = 'O';
                 }
                 j++;
             }
             i++;
-        }        
+        }
     }
 }
