@@ -16,14 +16,11 @@ class Solution {
         }
         set.add(i);
         for(int j = 0; j < hashmap.get(i).size(); j++){
-            if(visited.contains(hashmap.get(i).get(j))){
-                continue;
-            }
+
             helper(hashmap.get(i).get(j));
         }
         set.remove(i);
         visited.add(i);
-
     }
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         int i = 0;
