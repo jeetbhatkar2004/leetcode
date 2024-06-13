@@ -8,7 +8,6 @@ class Solution {
         int index;
         Pair(int val, int index){
             this.val = val;
-            this.index = index;
         }
     }
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
