@@ -11,9 +11,6 @@ class Solution {
             valid = false;
             return;
         }
-        if(visited.contains(i)){
-            return;
-        }
         set.add(i);
         for(int j = 0; j < hashmap.get(i).size(); j++){
             if(visited.contains(hashmap.get(i).get(j))){
@@ -38,7 +35,6 @@ class Solution {
             i++;
         }
         for(Map.Entry<Integer, List<Integer>> curr : hashmap.entrySet()){
-            set.clear();
             helper(curr.getKey());
         }
         return valid;
