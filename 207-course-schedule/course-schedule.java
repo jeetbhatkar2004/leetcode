@@ -1,42 +1,45 @@
 class Solution {
-    Map<Integer, List<Integer>> hashmap = new HashMap<>();
-    Set<Integer> set = new HashSet<>();
+    Set<Integer> hashset = new HashSet<>();
+    Map<Integer, List<Integer>> map = new HashMap<>();
     Set<Integer> visited = new HashSet<>();
     boolean valid = true;
     void helper(int i){
-        if(!hashmap.containsKey(i)){
+        if(!map.containsKey(i)){
             return;
         }
-        if(set.contains(i)){
+        if(hashset.contains(i)){
             valid = false;
             return;
         }
-        set.add(i);
-        for(int j = 0; j < hashmap.get(i).size(); j++){
-            if(visited.contains(hashmap.get(i).get(j))){
-                continue;
-            }
-            helper(hashmap.get(i).get(j));
+        if(visited.contains(i)){
+            return;
         }
-        set.remove(i);
+        hashset.add(i);
+        List<Integer> temp = map.get(i);
+        for(int j = 0; j < temp.size(); j++){
+            helper(temp.get(j));
+        }
+        hashset.remove(i);
         visited.add(i);
     }
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         int i = 0;
         while(i < prerequisites.length){
-            List<Integer> prereq = new ArrayList<>();
-            if(hashmap.containsKey(prerequisites[i][0])){
-                hashmap.get(prerequisites[i][0]).add(prerequisites[i][1]);
+            if(map.containsKey(prerequisites[i][0])){
+                map.get(prerequisites[i][0]).add(prerequisites[i][1]);
             }
             else{
-                prereq.add(prerequisites[i][1]);
-                hashmap.put(prerequisites[i][0], prereq);
+                List<Integer> temp = new ArrayList<>();
+                temp.add(prerequisites[i][1]);
+                map.put(prerequisites[i][0], temp);
             }
             i++;
         }
-        for(Map.Entry<Integer, List<Integer>> curr : hashmap.entrySet()){
+        for(Map.Entry<Integer, List<Integer>> curr : map.entrySet()){
             helper(curr.getKey());
         }
         return valid;
+
+
     }
 }
