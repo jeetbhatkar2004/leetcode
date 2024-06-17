@@ -16,8 +16,7 @@
 class Solution {        
     List<List<Integer>> result = new ArrayList<>();
     List<Integer> curr = new ArrayList<>();
-    int count = 0;
-    void helper(TreeNode root, int target){
+    void helper(TreeNode root, int target, int count){
         if(root == null){
             return;
         }
@@ -29,14 +28,13 @@ class Solution {
                 result.add(new ArrayList<>(curr));
             }
         }
-        helper(root.left, target);
-        helper(root.right, target);
+        helper(root.left, target, count);
+        helper(root.right, target, count);
         curr.remove(curr.size() -1);
-        count = count - root.val;
         
     }
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-        helper(root, targetSum);
+        helper(root, targetSum, 0);
         return result;
     }
 }
