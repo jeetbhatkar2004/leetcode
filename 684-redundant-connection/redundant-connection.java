@@ -16,6 +16,7 @@ class Solution {
                 dfs(neighbor, node, visited);
             }
         }
+        visited.remove(node);
         return false;
     }
 
