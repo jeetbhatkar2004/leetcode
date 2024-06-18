@@ -10,9 +10,10 @@ class Solution {
                 if (neighbor == parent) {
                     continue; 
                 }
-                if (visited.contains(neighbor) || dfs(neighbor, node, visited)) {
+                if (visited.contains(neighbor)) {
                     return true;
                 }
+                dfs(neighbor, node, visited);
             }
         }
         return false;
