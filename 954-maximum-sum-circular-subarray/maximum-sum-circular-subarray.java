@@ -23,9 +23,6 @@ class Solution {
             }
             i++;
         }
-        System.out.println(min);
-                System.out.println(total);
-
         if(temp <= 0){
             return temp;
         }
