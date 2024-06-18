@@ -1,42 +1,32 @@
 class Solution {
-    boolean flag = false;
-    void helper(char[][] board, int i, int j, String word, int curr){
-        if(curr == word.length()){
-            flag = true;
-            return;
-        }
-        if(i < 0 || i >= board.length || j < 0 || j >= board[0].length || board[i][j] != word.charAt(curr)){
+    boolean valid = false;
+    void helper(char[][] board, String word, int curr, int i , int j){
+        if(i < 0 || j < 0 || i >= board.length || j >= board[0].length || board[i][j] != word.charAt(curr)){
             return;
         }
         char temp = board[i][j];
-        board[i][j] = '*'; 
-
-        helper(board, i+1, j, word, curr+1);
-        helper(board, i-1, j, word, curr+1);
-        helper(board, i, j+1, word, curr+1);
-        helper(board, i, j-1, word, curr+1);
-        board[i][j] = temp; // Restore the current cell
+        board[i][j] = '*';
+        curr++;
+        if(curr == word.length()){
+            valid = true;
+            return;
+        }
+        helper(board, word, curr, i + 1, j);
+        helper(board, word, curr, i - 1, j);
+        helper(board, word, curr, i, j + 1);
+        helper(board, word, curr, i, j - 1);
+        board[i][j] = temp;
 
     }
     public boolean exist(char[][] board, String word) {
-        int n = board.length;
-        int m = board[0].length;
-        int i = 0;
-        int j = 0;
-        while(i < n){
-            j = 0;
-            while(j < m){
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board[0].length ; j++){
                 if(board[i][j] == word.charAt(0)){
-                    helper(board, i, j, word, 0);
-                    if(flag){
-                        return true;
-                    }
+                    helper(board, word, 0, i, j);
                 }
-                j++;
             }
-            i++;
         }
-        return false;
-        
+        return valid;
+
     }
 }
