@@ -3,12 +3,15 @@ class Solution {
         int i = 1;
         int result = Integer.MIN_VALUE;
         PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
-        while(i <= n){
+        while(i <= Math.sqrt(n)){
             if(n % i == 0){
                 pq.offer(i);
+                if(i != n/i){
+                    pq.offer(n/i);
+                }
             }
             i++;
-            if(pq.size() > k){
+            while(pq.size() > k){
                 result = pq.poll();
             }
         }
