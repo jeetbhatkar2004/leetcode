@@ -15,20 +15,24 @@
  */
 class Solution {
     private boolean hmm = true;
-    private boolean helper(TreeNode p, TreeNode q){
+    private void helper(TreeNode p, TreeNode q){
         if(p == null && q== null){
-            return true;
+            return;
         }
-        if(p != null && q!= null && p.val == q.val){
-            return helper(p.left, q.left) && helper(p.right, q.right);
+        if(q == null || p == null){
+            hmm = false;
+            return;
         }
-        hmm = false;
-        return false;
+        if(q.val != p.val){
+            hmm = false;
+            return;
+        }
+        helper(p.left, q.left);
+        helper(p.right, q.right);
         
     }
     public boolean isSameTree(TreeNode p, TreeNode q) {
         helper(p,q);
         return hmm;
-
     }
 }
