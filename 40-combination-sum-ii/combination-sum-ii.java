@@ -5,13 +5,15 @@ class Solution {
             result.add(new ArrayList<>(curr));
             return;
         }
+        Set<Integer> set = new HashSet<>();
         for(int i = start; i < candidates.length; i++){
-            if(i > start && candidates[i] == candidates[i-1]){
+            if(set.contains(candidates[i])){
                 continue;
             }
             if(sum + candidates[i] > target){
                 continue;
             }
+            set.add(candidates[i]);
             curr.add(candidates[i]);
             helper(candidates, target, sum + candidates[i], i + 1, curr);
             curr.remove(curr.size() - 1);
