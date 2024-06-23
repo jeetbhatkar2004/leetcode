@@ -29,11 +29,10 @@ class Solution {
             return map.get(node);
         }
         map.put(node, new Node(node.val));
-        for(Node neighbor : node.neighbors){
-            Node temp = cloneGraph(neighbor);
+        for(Node i : node.neighbors){
+            Node temp = cloneGraph(i);
             map.get(node).neighbors.add(temp);
         }
         return map.get(node);
-        
     }
 }
