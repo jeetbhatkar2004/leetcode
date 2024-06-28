@@ -5,6 +5,9 @@ class Solution {
             result.add(new ArrayList<>(curr));
             return;
         }
+        if(curr.size() > k){
+            return;
+        }
         for(int i = start; i < 10; i++){
             curr.add(i);
             helper(k, n, count + i, i + 1, curr);
