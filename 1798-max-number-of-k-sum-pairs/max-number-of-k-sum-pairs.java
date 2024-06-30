@@ -1,23 +1,29 @@
 class Solution {
     public int maxOperations(int[] nums, int k) {
-        Arrays.sort(nums);
+        Map<Integer, Integer> set = new HashMap<>();
         int i = 0;
-        int j = nums.length - 1;
         int res = 0;
-        while(i < j){
-            int curr = nums[i] + nums[j];
-            if(curr == k){
+        while(i < nums.length){
+            if(set.containsKey(k - nums[i])){
                 res++;
-                i++;
-                j--;
+                int temp = set.get(k - nums[i]) - 1;
+                if(temp == 0){
+                    set.remove(k - nums[i]);
+                }
+                else{
+                    set.put(k - nums[i], temp);
+                }
             }   
-            else if(curr > k){
-                j--;
+            else if(set.containsKey(nums[i])){
+                int temp = set.get(nums[i]) + 1;
+                set.put(nums[i], temp);
             }
-            else{
-                i++;
+            else if (!set.containsKey(nums[i])){
+                set.put(nums[i], 1);
             }
+            i++;
         }
         return res;
+
     }
 }
