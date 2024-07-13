@@ -19,8 +19,7 @@ class Node {
 */
 
 class Solution {
-    Map<Node, Node> map = new HashMap<>(); // maps real node to clone node (key : real, val: clone)
-
+    Map<Node, Node> map = new HashMap<>();
     public Node cloneGraph(Node node) {
         if(node == null){
             return null;
@@ -29,8 +28,9 @@ class Solution {
             return map.get(node);
         }
         map.put(node, new Node(node.val));
-        for(Node i : node.neighbors){
-            Node temp = cloneGraph(i);
+        List<Node> n = node.neighbors;
+        for(int i = 0; i < n.size(); i++){
+            Node temp = cloneGraph(n.get(i));
             map.get(node).neighbors.add(temp);
         }
         return map.get(node);
