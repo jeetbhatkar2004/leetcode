@@ -13,34 +13,25 @@ import java.util.Map;
  */
 class Solution {
     public ListNode deleteDuplicates(ListNode head) {
-        // Map to store the frequency of each value in the linked list
-        Map<Integer, Boolean> map = new HashMap<>();
+        ListNode dummy = new ListNode();
+        dummy.next = head;
+        ListNode prev = dummy;
+        if(head == null) return null;
+        if(head.next == null) return head;
         ListNode curr = head;
-
-        // First pass to count the occurrences of each value
-        while (curr != null) {
-            if (map.containsKey(curr.val)) {
-                map.put(curr.val, false);
-            } else {
-                map.put(curr.val, true);
+        while(curr != null){
+            if(curr.next != null && curr.val == curr.next.val){
+                while(curr.next != null && curr.val == curr.next.val){
+                    curr = curr.next;
+                }
+                prev.next = curr.next;;
+            }
+            else{
+                prev = prev.next;
             }
             curr = curr.next;
         }
-
-        // Dummy node to handle edge cases
-        ListNode dummy = new ListNode(0);
-        ListNode res = dummy;
-
-        // Second pass to construct the result list with only unique values
-        curr = head;
-        while (curr != null) {
-            if (map.get(curr.val)) {
-                res.next = new ListNode(curr.val);
-                res = res.next;
-            }
-            curr = curr.next;
-        }
-
         return dummy.next;
+
     }
 }
