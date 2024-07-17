@@ -1,24 +1,21 @@
 class Solution {
-    boolean check(int[][] grid){
-        for(int i = 0; i < grid.length; i++){
-            for(int j = 0; j < grid[0].length; j++){
-                if(grid[i][j] == 1){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
     public int orangesRotting(int[][] grid) {
+        boolean foundone = false;
         Queue<int[]> qu = new LinkedList<>();
         for(int i = 0; i < grid.length; i++){
             for(int j = 0; j < grid[0].length; j++){
                 if(grid[i][j] == 2){
                     qu.add(new int[] {i,j});
                 }
+                if(grid[i][j] == 1){
+                    foundone = true;
+                }
             }
         }
-        int result = 0;
+        if(!foundone){
+            return 0;
+        }
+        int count = 0;
         while(!qu.isEmpty()){
             int size = qu.size();
             while(size > 0){
@@ -45,16 +42,24 @@ class Solution {
                     grid[i][j - 1] = -1;
 
                 }
-                size--;
+                size--;         
             }
-            result++;
+            count++;
         }
-        if(check(grid)){
+        if (!check(grid)){
             return -1;
         }
-        if(result == 0){
-            return result;
+        return count-1;
+
+    }
+    boolean check(int[][] grid){
+        for(int i = 0; i < grid.length; i++){
+            for(int j = 0; j< grid[0].length; j++){
+                if(grid[i][j] == 1){
+                    return false;
+                }
+            }
         }
-        return result - 1;
+        return true;
     }
 }
