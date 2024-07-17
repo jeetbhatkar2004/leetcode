@@ -14,42 +14,25 @@
  * }
  */
 class Solution {
-    List<TreeNode> list = new ArrayList<>();
-    boolean valid = true;
-    void helper(TreeNode root){
-        if(root == null){
-            return;
+    boolean isIdentical(TreeNode root1, TreeNode root2) {
+        if (root1 == null && root2 == null) {
+            return true;
         }
-        list.add(root);
-        helper(root.left);
-        helper(root.right);
+        if (root1 == null || root2 == null) {
+            return false;
+        }
+        return (root1.val == root2.val)
+            && isIdentical(root1.left, root2.left)
+            && isIdentical(root1.right, root2.right);
     }
-    void dfs(TreeNode root, TreeNode sub){
-        if(root == null && sub == null){
-            return;
-        }
-        if(root == null || sub == null){
-            valid = false;
-            return;
-        }
-        if(root.val != sub.val){
-            valid = false;
-            return;
-        }
-        dfs(root.left, sub.left);
-        dfs(root.right, sub.right);
-        
-    }
+    
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        helper(root);
-        for(TreeNode curr : list){
-            valid = true;
-            dfs(curr, subRoot);
-            if(valid){
-                return true;
-            }
+        if (root == null) {
+            return false;
         }
-        return false;
-        
+        if (isIdentical(root, subRoot)) {
+            return true;
+        }
+        return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
     }
 }
