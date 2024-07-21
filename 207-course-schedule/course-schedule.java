@@ -1,45 +1,44 @@
 class Solution {
-    Set<Integer> hashset = new HashSet<>();
-    Map<Integer, List<Integer>> map = new HashMap<>();
-    Set<Integer> visited = new HashSet<>();
-    boolean valid = true;
-    void helper(int i){
-        if(!map.containsKey(i)){
+    Set<Integer> set = new HashSet<>();
+    Set<Integer> cycle = new HashSet<>();
+    boolean valid = false;
+    void helper(int curr, Map<Integer, List<Integer>> map){
+        if(!map.containsKey(curr)){
             return;
         }
-        if(hashset.contains(i)){
-            valid = false;
+        if(set.contains(curr)){
             return;
         }
-        if(visited.contains(i)){
+        if(cycle.contains(curr)){
+            valid = true;
             return;
         }
-        hashset.add(i);
-        List<Integer> temp = map.get(i);
-        for(int j = 0; j < temp.size(); j++){
-            helper(temp.get(j));
+        cycle.add(curr);
+        List<Integer> temp = map.get(curr);
+        for(int i = 0; i < temp.size(); i++){
+            helper(temp.get(i), map);
         }
-        hashset.remove(i);
-        visited.add(i);
+        cycle.remove(curr);
+        set.add(curr);
     }
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        int i = 0;
-        while(i < prerequisites.length){
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        for(int i = 0; i < prerequisites.length; i++){
             if(map.containsKey(prerequisites[i][0])){
                 map.get(prerequisites[i][0]).add(prerequisites[i][1]);
             }
             else{
-                List<Integer> temp = new ArrayList<>();
-                temp.add(prerequisites[i][1]);
-                map.put(prerequisites[i][0], temp);
+                List<Integer> curr = new ArrayList<>();
+                curr.add(prerequisites[i][1]);
+                map.put(prerequisites[i][0], curr);
             }
-            i++;
         }
         for(Map.Entry<Integer, List<Integer>> curr : map.entrySet()){
-            helper(curr.getKey());
-        }
-        return valid;
-
-
+            helper(curr.getKey(), map);
+            if(valid){
+                return false;
+            }
+        }   
+        return true;
     }
 }
