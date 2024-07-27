@@ -1,10 +1,15 @@
 class Solution {
-    int helper(int[][] grid, int i, int j, int count){
+    int count = 0;
+    void helper(int[][] grid, int i, int j){
         if(i < 0 || j < 0 || i >= grid.length || j >= grid[0].length || grid[i][j] != 1){
-            return 0;
+            return;
         }
         grid[i][j] = 2;
-        return 1 + helper(grid, i + 1, j, count) + helper(grid, i - 1, j, count) + helper(grid, i, j + 1, count) + helper(grid, i, j - 1, count);
+        count++;
+        helper(grid, i + 1, j);
+        helper(grid, i - 1, j);
+        helper(grid, i, j + 1);
+        helper(grid, i, j - 1);
     }
     public int maxAreaOfIsland(int[][] grid) {
         int max = 0;
@@ -16,7 +21,8 @@ class Solution {
             j = 0;
             while(j < n){
                 if(grid[i][j] == 1){
-                    int count = helper(grid, i, j, 0);
+                    count = 0;
+                    helper(grid, i, j);
                     max = Math.max(count, max);
                 }
                 j++;
