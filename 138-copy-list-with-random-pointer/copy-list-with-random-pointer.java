@@ -22,14 +22,12 @@ class Solution {
             curr = curr.next;
         }
         curr = head;
-        Node temp = curr;
         while(curr != null){
-            map.get(curr).next = map.get(curr.next);
-            map.get(curr).random = map.get(curr.random);
+            Node temp = map.get(curr);
+            temp.next = map.get(curr.next);
+            temp.random = map.get(curr.random);
             curr = curr.next;
         }
-        return map.get(temp);
-
-        
+        return map.get(head);
     }
 }
