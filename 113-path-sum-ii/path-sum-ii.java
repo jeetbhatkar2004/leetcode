@@ -13,28 +13,27 @@
  *     }
  * }
  */
-class Solution {        
+class Solution {
     List<List<Integer>> result = new ArrayList<>();
     List<Integer> curr = new ArrayList<>();
+    
     void helper(TreeNode root, int target, int count){
         if(root == null){
             return;
         }
         count = count + root.val;
         curr.add(root.val);
-        if(root.left == null && root.right == null){
-            if(count == target){
-                System.out.println(count);
-                result.add(new ArrayList<>(curr));
-            }
+        if(count == target && root.left == null && root.right == null){
+            result.add(new ArrayList<>(curr));
         }
         helper(root.left, target, count);
         helper(root.right, target, count);
-        curr.remove(curr.size() -1);
-        
+        curr.remove(curr.size() - 1);
+
     }
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
         helper(root, targetSum, 0);
         return result;
+        
     }
 }
