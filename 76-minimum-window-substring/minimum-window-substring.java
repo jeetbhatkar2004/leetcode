@@ -1,7 +1,7 @@
 class Solution {
-    boolean helper(Map<Character, Integer> map_s, Map<Character, Integer> map_t){
-        for(Map.Entry<Character, Integer> curr : map_t.entrySet()){
-            if(!map_s.containsKey(curr.getKey()) || curr.getValue() > map_s.get(curr.getKey())){
+    boolean helper(Map<Character, Integer> map_s, Map<Character, Integer> map_t) {
+        for (Map.Entry<Character, Integer> curr : map_t.entrySet()) {
+            if (!map_s.containsKey(curr.getKey()) || curr.getValue() > map_s.get(curr.getKey())) {
                 return false;
             }
         }
@@ -13,45 +13,48 @@ class Solution {
             return "";
         }
 
-        // Initialize frequency maps for t and the sliding window in s
+        String result = "";
+        int min = Integer.MAX_VALUE;
+        int i = 0;
+        int j = 0;
         Map<Character, Integer> map_t = new HashMap<>();
         Map<Character, Integer> map_s = new HashMap<>();
 
-        // Populate map_t with the frequency of each character in t
+        // Populate map_t with frequencies of characters in t
         for (int k = 0; k < t.length(); k++) {
             map_t.put(t.charAt(k), map_t.getOrDefault(t.charAt(k), 0) + 1);
         }
 
-        int minLength = Integer.MAX_VALUE;
-        String result = "";
-        int i = 0;
-
-        for (int j = 0; j < s.length(); j++) {
-            char charAtJ = s.charAt(j);
-
-            // Add current character to map_s
-            if (map_t.containsKey(charAtJ)) {
-                map_s.put(charAtJ, map_s.getOrDefault(charAtJ, 0) + 1);
+        while (j < s.length()) {
+            char endChar = s.charAt(j);
+            if (map_t.containsKey(endChar)) {
+                map_s.put(endChar, map_s.getOrDefault(endChar, 0) + 1);
             }
 
-            // Check if current window contains all characters of t
-            while (helper(map_s, map_t)) {
-                // Update result if this window is smaller
-                if (j - i + 1 < minLength) {
-                    minLength = j - i + 1;
-                    result = s.substring(i, j + 1);
-                }
-
-                // Try to shrink the window by removing the leftmost character
-                char charAtI = s.charAt(i);
-                if (map_s.containsKey(charAtI)) {
-                    map_s.put(charAtI, map_s.get(charAtI) - 1);
-                    if (map_s.get(charAtI) == 0) {
-                        map_s.remove(charAtI);
+            // Try to update the result and shrink the window
+            if (helper(map_s, map_t)) {
+                // Move `i` to the right as much as possible while the window is valid
+                while (helper(map_s, map_t)) {
+                    // Update the result if the current window is smaller
+                    if (min > j - i + 1) {
+                        min = j - i + 1;
+                        result = s.substring(i, j + 1);
                     }
+
+                    // Shrink the window from the left
+                    char startChar = s.charAt(i);
+                    if (map_s.containsKey(startChar)) {
+                        map_s.put(startChar, map_s.get(startChar) - 1);
+                        if (map_s.get(startChar) == 0) {
+                            map_s.remove(startChar);
+                        }
+                    }
+
+                    i++;
                 }
-                i++;
             }
+
+            j++;
         }
 
         return result;
