@@ -1,5 +1,4 @@
 class Solution {
-
     Map<Integer, List<Integer>> map = new HashMap<>();
     Set<Integer> visited = new HashSet<>();
     Set<Integer> curr = new HashSet<>();
@@ -7,7 +6,6 @@ class Solution {
         if(visited.contains(start) || curr.contains(start)){
             return;
         }
-
         curr.add(start);
         for(int i = 0; i < map.get(start).size(); i++){
             helper(map.get(start).get(i));
@@ -37,7 +35,5 @@ class Solution {
             }
         }
         return res;
-
-
     }
 }
