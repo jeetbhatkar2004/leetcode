@@ -13,24 +13,23 @@
  *     }
  * }
  */
-
-public class Solution {
-    private boolean valid = true;
-    private TreeNode prev = null;
-    public boolean isValidBST(TreeNode root) {
-        helper(root);
-        return valid;
-    }
-    
-    public void helper(TreeNode root) {
+class Solution {
+    boolean isBST = true;
+    TreeNode prev = null;
+    void helper(TreeNode root){
         if(root == null){
             return;
-        }        
+        }
         helper(root.left);
-        if(prev != null && root.val <= prev.val){
-            valid = false;
+        if (prev != null && root.val <= prev.val){
+            isBST = false;
+            return;
         }
         prev = root;
         helper(root.right);
+    }
+    public boolean isValidBST(TreeNode root) {
+        helper(root);
+        return isBST;
     }
 }
