@@ -14,32 +14,19 @@
  * }
  */
 class Solution {
-    class Pair{
-        int node;
-        double diff;
-        Pair(int node, double diff){
-            this.node = node;
-            this.diff = diff;
-        }
-    }
-    Pair result = new Pair(Integer.MAX_VALUE,Integer.MAX_VALUE);
+    int result = Integer.MAX_VALUE;
     void helper(TreeNode root, double target){
         if(root == null){
             return;
         }
-        if(result.diff > Math.abs(target - root.val) || (result.diff == Math.abs(target - root.val)) && result.node > root.val){
-            result.node = root.val;
-            result.diff = Math.abs(target - (double)root.val);
+        helper(root.left, target);
+        if(Math.abs(result - target) > Math.abs(root.val - target)){
+            result = root.val;
         }
-        if(root.val > target){
-            helper(root.left, target);
-        }
-        else{
-            helper(root.right, target);
-        }
+        helper(root.right, target);
     }
     public int closestValue(TreeNode root, double target) {
         helper(root, target);
-        return result.node;
+        return result;
     }
 }
