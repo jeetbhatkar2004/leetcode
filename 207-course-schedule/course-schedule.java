@@ -1,30 +1,27 @@
 class Solution {
-    Map<Integer, List<Integer>> map = new HashMap<>();
+    Set<Integer> current = new HashSet<>();
     Set<Integer> visited = new HashSet<>();
-    Set<Integer> path = new HashSet<>();
-
-    boolean canfin = true;
-    void helper(int i){
-        if(!map.containsKey(i)){
-            return;
-        }   
-        if(path.contains(i)){
-            canfin = false;
+    boolean cycle = false;
+    Map<Integer, List<Integer>> map = new HashMap<>();
+    void helper(int start){
+        if(!map.containsKey(start) || visited.contains(start)){
             return;
         }
-        if(visited.contains(i)){
+        if(current.contains(start)){
+            cycle = true;
             return;
         }
-        path.add(i);
-        List<Integer> list = map.get(i);
-        for(int j = 0; j < list.size(); j++){
-            helper(list.get(j));
+        current.add(start);
+        List<Integer> pre = map.get(start);
+        for(int j = 0; j < pre.size(); j++){
+            helper(pre.get(j));
         }
-        path.remove(i);
-        visited.add(i);
+        current.remove(start);
+        visited.add(start);
     }
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        for(int i = 0; i < prerequisites.length; i++){
+        int i = 0;
+        while(i  < prerequisites.length){
             if(map.containsKey(prerequisites[i][0])){
                 map.get(prerequisites[i][0]).add(prerequisites[i][1]);
             }
@@ -32,14 +29,14 @@ class Solution {
                 map.put(prerequisites[i][0], new ArrayList<>());
                 map.get(prerequisites[i][0]).add(prerequisites[i][1]);
             }
+            i++;
         }
         for(Map.Entry<Integer, List<Integer>> curr : map.entrySet()){
             helper(curr.getKey());
-            if(!canfin){
+            if(cycle){
                 return false;
             }
         }
         return true;
-
     }
 }
