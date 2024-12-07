@@ -32,7 +32,9 @@ class Solution {
             i++;
         }
         for(Map.Entry<Integer, List<Integer>> curr : map.entrySet()){
-            helper(curr.getKey());
+            if(!visited.contains(curr.getKey())){
+                helper(curr.getKey());
+            }
             if(cycle){
                 return false;
             }
