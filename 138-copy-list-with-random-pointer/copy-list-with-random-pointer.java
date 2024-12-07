@@ -23,11 +23,10 @@ class Solution {
         }
         curr = head;
         while(curr != null){
-            Node temp = map.get(curr);
-            temp.next = map.get(curr.next);
-            temp.random = map.get(curr.random);
+            map.get(curr).next = map.get(curr.next);
+            map.get(curr).random = map.get(curr.random);
             curr = curr.next;
         }
-        return map.get(head);
+        return map.get(head);  
     }
 }
