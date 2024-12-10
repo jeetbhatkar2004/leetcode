@@ -14,7 +14,8 @@
  * }
  */
 class Solution {
-    boolean valid = true;
+    boolean result = true;
+    int max = 0;
     int helper(TreeNode root){
         if(root == null){
             return 0;
@@ -22,12 +23,14 @@ class Solution {
         int left = helper(root.left);
         int right = helper(root.right);
         if(Math.abs(left - right) > 1){
-            valid = false;
+            result = false;
+            return 0;
         }
-        return 1 + Math.max(left, right);
+        return Math.max(left, right) + 1;
     }
+
     public boolean isBalanced(TreeNode root) {
         helper(root);
-        return valid;
+        return result;
     }
 }
