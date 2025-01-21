@@ -1,38 +1,24 @@
 class Solution {
-    int other = 0;
-    boolean div(int i, int n){
-        if(n % i == 0){
-            other = n/i;
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
     public int kthFactor(int n, int k) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        Set<Integer> set = new HashSet<>();
-        int i = 1;
-        while(i <= Math.sqrt(n)){
-            if(div(i,n) && !set.contains(i)){
-                pq.add(i);
-                if(i != other){
-                    pq.add(other);
-                    set.add(other);
-                }
-                set.add(i);
+        List<Integer> nums = new ArrayList<>();
+        for (int i = 1; i <= n/2; i++){
+            if ((n % i) == 0){
+                nums.add(i);
             }
-            i++;
+            if(nums.size() == k){
+                return nums.get(k-1);
+            }
+
         }
-        int size = pq.size();
-        if(k > size){
+        nums.add(n);
+        if (nums.size() < k){
             return -1;
         }
-        i = 1;
-        while(i < k){
-            pq.poll();
-            i++;
+        else{
+            return nums.get(k-1);
         }
-        return pq.poll();
+
+
+        
     }
 }
