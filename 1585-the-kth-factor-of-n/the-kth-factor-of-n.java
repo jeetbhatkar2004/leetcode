@@ -5,9 +5,6 @@ class Solution {
             if ((n % i) == 0){
                 nums.add(i);
             }
-            if(nums.size() == k){
-                return nums.get(k-1);
-            }
 
         }
         nums.add(n);
