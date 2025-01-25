@@ -7,10 +7,7 @@ class Solution:
             hashmap[i] += 1
         for key in hashmap.keys():
             heapq.heappush(heap, (-(hashmap[key]), key))
-        res = []
-        while len(res) < k:
-            res.append(heapq.heappop(heap)[1])
-        return res
-
-
-        
+        result = []
+        for i in range(0, k):
+            result.append(heapq.heappop(heap)[1])
+        return result
