@@ -1,13 +1,16 @@
-from collections import defaultdict
+from collections import Counter
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        hashmap = Counter(nums)
         heap = []
-        hashmap = defaultdict(int)
-        for i in nums:
-            hashmap[i] += 1
-        for key in hashmap.keys():
-            heapq.heappush(heap, (-(hashmap[key]), key))
+        for num in hashmap:
+            heapq.heappush(heap, (-hashmap.get(num), num))
         result = []
-        for i in range(0, k):
-            result.append(heapq.heappop(heap)[1])
+        while k > 0:
+            result.append((heapq.heappop(heap))[1])
+            k = k - 1
         return result
+        
+
+        
+            
