@@ -1,20 +1,29 @@
-import math
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
-        hashset = set()
-        for i in range(0, len(board)):
-            for j in range(0, len(board[0])):
-                row = str(board[i][j]) + "in row " + str(i)
-                col = str(board[i][j])+ "in col " + str(j)
-                box = str(board[i][j])+ "in box " + str(i//3) + "" + str(j//3)
-                if board[i][j] == ".":
+        cols = set()
+        rows = set()
+        boxes = set()
+        i = 0
+        j = 0
+        while i < len(board):
+            j = 0
+            while j < len(board[0]):
+                curr = board[i][j]
+                currrow = str(curr) + "in row " + str(i)
+                currcol = str(curr) + "in col " + str(j)
+                currbox = str(curr) + "in box " + str(i//3) + " and " + str(j//3)
+                if curr == '.':
+                    j = j + 1
                     continue
-                if (row in hashset) or (col in hashset) or (box in hashset):
+                if (currcol in cols) or (currrow in rows) or (currbox in boxes):
                     return False
-                hashset.add(row)
-                hashset.add(col)
-                hashset.add(box)
+                cols.add(str(curr) + "in col " + str(j))
+                rows.add(str(curr) + "in row " + str(i))
+                boxes.add(str(curr) + "in box " + str(i//3) + " and " + str(j//3))
+                j = j + 1
+            i = i + 1
         return True
+            
 
-
+        
         
