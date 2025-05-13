@@ -2,23 +2,25 @@ class MinStack:
 
     def __init__(self):
         self.stack = []
-        self.heap = []
+        self.currmin = inf
     def push(self, val: int) -> None:
-        self.stack.append(val)
-        heapq.heappush(self.heap, val)
-
+        self.currmin = min(self.currmin, val)
+        self.stack.append([val, self.currmin])
+    
     def pop(self) -> None:
-        temp = self.stack.pop()
-        self.heap.remove(temp)
-        heapq.heapify(self.heap)
+        self.stack.pop()
+        if self.stack:
+            self.currmin = self.stack[-1][1]
+        else:
+            self.currmin = inf
 
 
     def top(self) -> int:
-        return self.stack[-1]
+        return self.stack[-1][0]
         
 
     def getMin(self) -> int:
-        return self.heap[0]
+        return self.stack[-1][1]
         
 
 
