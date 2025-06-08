@@ -1,18 +1,19 @@
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        l = 0
-        r = (len(matrix) * len(matrix[0])) - 1
-        while l <= r:
-            mid = (l + r)//2
-            row = mid//(len(matrix[0]))
-            col = mid % (len(matrix[0]))
-            if matrix[row][col] == target:
+        left = 0
+        right = (len(matrix) * len(matrix[0])) - 1
+        while left <= right:
+            mid = left + (right - left)//2
+            mid1 = mid // len(matrix[0])
+            mid2 = mid - ((mid1 + 1) * len(matrix[0]))
+            if matrix[mid1][mid2] == target:
                 return True
-            if matrix[row][col] > target:
-                r = mid - 1
+            elif matrix[mid1][mid2] > target:
+                right = mid -1
             else:
-                l = mid + 1
+                left = mid + 1
         return False
+
 
                 
         
