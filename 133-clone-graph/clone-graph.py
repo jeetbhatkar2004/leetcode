@@ -8,17 +8,16 @@ class Node:
 
 from typing import Optional
 class Solution:
-    hashmap = {}
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        if not node:
-            return None
-        if node in self.hashmap:
-            return self.hashmap[node]
-        self.hashmap[node] = Node(node.val)
-        neighbor = node.neighbors
-        for i in range(len(neighbor)):
-            curr = neighbor[i]
-            self.hashmap[node].neighbors.append(self.cloneGraph(curr))
-        return self.hashmap[node]
-
-        
+        hashmap = {}
+        def helper(node):
+            if not node:
+                return None
+            if node in hashmap:
+                return hashmap[node]
+            hashmap[node] = Node(node.val)
+            neighbor = node.neighbors
+            for i in range(len(neighbor)):
+                hashmap[node].neighbors.append(helper(neighbor[i]))
+            return hashmap[node]
+        return helper(node)
